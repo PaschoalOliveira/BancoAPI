@@ -1,5 +1,6 @@
 package com.example.demo.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.stereotype.Repository;
@@ -11,7 +12,7 @@ import com.example.demo.models.Cliente;
 //Classe responsável por consumir o banco
 public class ClienteRepository {
 
-	// Método responsável por resgatar as informações do banco
+    // Método responsável por resgatar as informações do banco
 	public String resgatarNome(Integer matricula) {
 		// Criou um hashMap que irá simular o banco
 		HashMap<Integer, String> hashClientes = new HashMap<Integer, String>();
@@ -19,7 +20,7 @@ public class ClienteRepository {
 		hashClientes.put(1, "Duan");
 		hashClientes.put(2, "Tayanne");
 		hashClientes.put(3, "Henrique");
-		// REsgata o hashMap a partir da matricula
+		// Resgata o hashMap a partir da matricula
 		String nome = hashClientes.get(matricula);
 		return nome;
 	}
@@ -38,5 +39,32 @@ public class ClienteRepository {
 		// Resgata o hashMap a partir da matricula
 		Cliente cliente = hashClientes.get(cpf);
 		return cliente;
+	}
+	
+	
+	// Método responsável por resgatar as informações do banco
+	public ArrayList<Cliente> resgatarClientePorSexoRepository(Character sexo) {
+
+		// Criou um array que irá simular o banco
+		ArrayList<Cliente> arrayClientes = new ArrayList<Cliente>();
+
+		// Preenche o array/banco
+		arrayClientes.add(new Cliente("Luan", 91872, 'M'));
+		arrayClientes.add(new Cliente("Fernanda", 91872, 'F'));
+		arrayClientes.add(new Cliente("Willian", 91872, 'M'));
+	
+		// Resgata o hashMap a partir da matricula
+		//Object[] retorno = 
+		//		arrayClientes.stream().filter(p->p.getSexo().equals(sexo)).toArray();
+		
+		//Cria umsta de retorno com os clientes que possuem o sexo informado
+		ArrayList<Cliente> listaRetorno = new ArrayList<Cliente>();
+		for(Cliente cliente : arrayClientes) {
+			if(cliente.getSexo().equals(sexo)) {
+				listaRetorno.add(cliente);
+			}
+		}
+		
+		return listaRetorno;
 	}
 }

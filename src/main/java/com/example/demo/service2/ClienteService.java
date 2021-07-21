@@ -1,5 +1,7 @@
 package com.example.demo.service2;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +32,14 @@ public class ClienteService {
 		Cliente cliente = clienteRepository.resgatarClienteRepository(cpf);
 		
 		return cliente;
+	}
+	
+	//Responsavel por executar alguma operação sobre clientes
+		//e resgatar os dados no Repository
+	public ArrayList<Cliente> pesquisarClientePorSexo(Character sexo) {
+		
+		ArrayList<Cliente> arrayClientes = clienteRepository.resgatarClientePorSexoRepository(sexo);
+		
+		return arrayClientes;
 	}
 }
