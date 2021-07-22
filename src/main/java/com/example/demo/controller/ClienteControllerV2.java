@@ -3,8 +3,9 @@ package com.example.demo.controller;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,27 +13,40 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.Cliente;
-import com.example.demo.service2.ClienteService;
+import com.example.demo.service.ClienteService;
 
 //Define um bean Controller
 @RestController
-@RequestMapping("/clientes")
-public class ClienteController {
+@RequestMapping("/v2/clientes")
+public class ClienteControllerV2 {
 	
 	@Autowired
 	ClienteService clienteService;
 	
+	//Cria uma rota para consulta do FindALL do meu JPA
 	@GetMapping
-	public ArrayList<Cliente> pesquisarTodos() {
+	public ArrayList<Cliente> pesquisarTodos(){
+		return clienteService.findAll();
+	}
+	
+	//Cria uma nova rota para consulta do findById pelo JPA
+	@GetMapping("{cpf}")
+	public Cliente pesquisaPorId(@PathVariable Integer cpf) {
 		
-		System.out.println("Retornando todos os clientes");
-		return new ArrayList<Cliente>();
+		return clienteService.findByID(cpf);
 	}
 	
 	@PostMapping
 	public void inserirCliente(@RequestBody Cliente cliente) {
 		//chama o meu service que vai inserir cliente
 		System.out.println("Inserindo " + cliente.toString());
+	}
+	
+	//Deleta um Cliente a partir do cpf chamando o JPA
+	@DeleteMapping("{cpf}")
+	public void deletarCliente(@PathVariable Integer cpf) {
+		
+		clienteService.deleteById(cpf);
 	}
 	
 	//Criando nova rota
@@ -54,9 +68,10 @@ public class ClienteController {
 	}
 	
 	//Criando nova rota para pesquisa de Clientes
-	@GetMapping("/pesquisarClientePorSexo")
-	public ArrayList<Cliente> pesquisarClientePorSexo(@RequestParam("sexo") Character sexo,
-													  @Nullable @RequestParam("cpf") String cpf) {
+	@GetMapping("/{sexo}/pesquisarClientePorSexo/{idade}")
+	public ArrayList<Cliente> pesquisarClientePorSexo(@PathVariable("sexo") Character sexo,
+													  @PathVariable("idade") String idade,
+													  @RequestParam("cpf") String cpf) {
 			
 		//Realiza a chamada à camada service 
 		ArrayList<Cliente> arrayCliente = clienteService.pesquisarClientePorSexo(sexo);

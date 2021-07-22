@@ -1,12 +1,20 @@
 package com.example.demo.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity(name="cliente")
 public class Cliente {
 
-	private String nome;
+	@Id
 	private Integer cpf;
+	@Column
+	private String nome;
+	@Column
 	private Character sexo;
+	@Column
+	private Integer telefone;
 	
 	public Cliente() {
 		
@@ -42,5 +50,11 @@ public class Cliente {
 
 	public void setSexo(Character sexo) {
 		this.sexo = sexo;
+	}
+	public Integer getTelefone() {
+		return telefone;
+	}
+	public void setTelefone(Integer telefone) {
+		this.telefone = telefone;
 	}
 }
