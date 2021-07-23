@@ -35,6 +35,10 @@ public class ClienteService {
 		return optionalClienteRetorno.get();
 	}
 	
+	public void save(Cliente cliente) {
+		clienteRepository2.save(cliente);
+	}
+	
 	//Método responsável por chamar o delete do JPA
 	public void deleteById(Integer cpf) {
 		clienteRepository2.deleteById(cpf);

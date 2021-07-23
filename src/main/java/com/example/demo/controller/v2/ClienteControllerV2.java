@@ -1,12 +1,13 @@
-package com.example.demo.controller;
+package com.example.demo.controller.v2;
 
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,22 +18,45 @@ import com.example.demo.service.ClienteService;
 
 //Define um bean Controller
 @RestController
-@RequestMapping("/v1/clientes")
-public class ClienteControllerV1 {
+@RequestMapping("/v2/clientes")
+public class ClienteControllerV2 {
 	
 	@Autowired
 	ClienteService clienteService;
 	
+	//Cria uma rota para consulta do FindALL do meu JPA
 	@GetMapping
-	public ArrayList<Cliente> pesquisarTodos() {
-		
+	public ArrayList<Cliente> pesquisarTodos(){
 		return clienteService.findAll();
 	}
 	
+	//Cria uma nova rota para consulta do findById pelo JPA
+	@GetMapping("{cpf}")
+	public Cliente pesquisaPorId(@PathVariable Integer cpf) {
+		
+		return clienteService.findByID(cpf);
+	}
+	
+	//Método com o verbo POST que será responsável por salvar o cliente 
+	//utilizando JPA
 	@PostMapping
 	public void inserirCliente(@RequestBody Cliente cliente) {
-		//chama o meu service que vai inserir cliente
-		System.out.println("Inserindo " + cliente.toString());
+		
+		clienteService.save(cliente);
+	}
+
+	//Método responsável por atualizar completamente meu objeto
+	@PutMapping
+	public void atualizarCliente(@RequestBody Cliente cliente) {
+		
+		clienteService.save(cliente);
+	}
+	
+	//Deleta um Cliente a partir do cpf chamando o JPA
+	@DeleteMapping("{cpf}")
+	public void deletarCliente(@PathVariable Integer cpf) {
+		
+		clienteService.deleteById(cpf);
 	}
 	
 	//Criando nova rota

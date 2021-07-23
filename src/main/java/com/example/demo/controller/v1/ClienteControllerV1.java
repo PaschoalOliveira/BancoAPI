@@ -1,9 +1,9 @@
-package com.example.demo.controller;
+package com.example.demo.controller.v1;
 
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,36 +17,22 @@ import com.example.demo.service.ClienteService;
 
 //Define um bean Controller
 @RestController
-@RequestMapping("/v2/clientes")
-public class ClienteControllerV2 {
+@RequestMapping("/v1/clientes")
+public class ClienteControllerV1 {
 	
 	@Autowired
 	ClienteService clienteService;
 	
-	//Cria uma rota para consulta do FindALL do meu JPA
 	@GetMapping
-	public ArrayList<Cliente> pesquisarTodos(){
-		return clienteService.findAll();
-	}
-	
-	//Cria uma nova rota para consulta do findById pelo JPA
-	@GetMapping("{cpf}")
-	public Cliente pesquisaPorId(@PathVariable Integer cpf) {
+	public ArrayList<Cliente> pesquisarTodos() {
 		
-		return clienteService.findByID(cpf);
+		return clienteService.findAll();
 	}
 	
 	@PostMapping
 	public void inserirCliente(@RequestBody Cliente cliente) {
 		//chama o meu service que vai inserir cliente
 		System.out.println("Inserindo " + cliente.toString());
-	}
-	
-	//Deleta um Cliente a partir do cpf chamando o JPA
-	@DeleteMapping("{cpf}")
-	public void deletarCliente(@PathVariable Integer cpf) {
-		
-		clienteService.deleteById(cpf);
 	}
 	
 	//Criando nova rota
