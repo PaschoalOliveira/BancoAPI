@@ -3,22 +3,31 @@ package com.example.demo.models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name="cliente")
 public class Cliente {
 
 	@Id
 	private Integer cpf;
-	@Column
+	
+	@Column(name="nome")
 	private String nome;
+	
 	@Column
 	private Character sexo;
+	
 	@Column
 	private Integer telefone;
+	
+	//@OneToMany(mappedBy="cart")
 	
 	public Cliente() {
 		
 	}
+	
 	//Construtor que define nome e cpf
 	public Cliente(String nome, Integer cpf) {
 		this.setNome(nome);

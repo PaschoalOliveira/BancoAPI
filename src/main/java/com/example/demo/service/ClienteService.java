@@ -35,6 +35,13 @@ public class ClienteService {
 		return optionalClienteRetorno.get();
 	}
 	
+	public ArrayList<Cliente> findBySexo(Character sexo){
+		ArrayList<Cliente> arrayRetorno = new ArrayList<Cliente>();
+		//Faz o CAST de uma List para um ArrayList
+		arrayRetorno = (ArrayList<Cliente>) clienteRepository2.findBySexo(sexo);
+		return arrayRetorno;
+	}
+	
 	public void save(Cliente cliente) {
 		clienteRepository2.save(cliente);
 	}

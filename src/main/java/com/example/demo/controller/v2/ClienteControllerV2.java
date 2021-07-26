@@ -37,6 +37,13 @@ public class ClienteControllerV2 {
 		return clienteService.findByID(cpf);
 	}
 	
+	//Cria uma nova rota para consulta do findById pelo JPA
+	@GetMapping("/sexo/{sexo}")
+	public ArrayList<Cliente> pesquisaPorId(@PathVariable Character sexo) {
+		
+		return clienteService.findBySexo(sexo);
+	}
+		
 	//Método com o verbo POST que será responsável por salvar o cliente 
 	//utilizando JPA
 	@PostMapping
