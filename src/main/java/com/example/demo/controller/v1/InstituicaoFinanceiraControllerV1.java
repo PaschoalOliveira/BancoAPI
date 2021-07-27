@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.models.InstituicaoFinanceira;
 import com.example.demo.service.InstituicaoFinanceiraService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping("/v1/instituicoes")
 public class InstituicaoFinanceiraControllerV1 {
@@ -25,6 +29,7 @@ public class InstituicaoFinanceiraControllerV1 {
 	@Autowired
 	InstituicaoFinanceiraService instituicaoService;
 	
+	@ApiOperation(value = "Retorna uma lista de instituições")
 	@GetMapping
 	public ArrayList<InstituicaoFinanceira> buscarTodasAsInstituicoes() {
 		return instituicaoService.findAll();
@@ -65,6 +70,11 @@ public class InstituicaoFinanceiraControllerV1 {
 		instituicaoService.delete(codigo);
 	}
 	
+	//Anotações para indicar as respostas do meu endpoint
+	@ApiResponses(value = {
+			@ApiResponse(code=200,message="Instituição atualizada com sucesso"),
+			@ApiResponse(code=422,message="Não há entidade com o código especificado")
+	})
 	@PutMapping
 	public ResponseEntity atualizar(@RequestBody InstituicaoFinanceira instituicao) {
 		try {

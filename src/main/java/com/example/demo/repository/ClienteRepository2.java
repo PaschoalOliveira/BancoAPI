@@ -13,5 +13,8 @@ import com.example.demo.models.Cliente;
 public interface ClienteRepository2 extends JpaRepository<Cliente, Integer>{
 
 	 @Query("SELECT c FROM cliente c WHERE c.sexo = ?1")
-	 List<Cliente> findBySexo(Character sexo);
+	 List<Cliente> pesquisaPorSexo(Character sexo);
+	 
+	 @Query("SELECT c FROM cliente c WHERE c.telefone like '%' || ?1 || '%'")
+	 List<Cliente> pesquisaPorTelefone(String numero);
 }

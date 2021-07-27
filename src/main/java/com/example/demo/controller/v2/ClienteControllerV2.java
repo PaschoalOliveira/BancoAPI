@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.models.Cliente;
 import com.example.demo.service.ClienteService;
 
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 //Define um bean Controller
 @RestController
 @RequestMapping("/v2/clientes")
@@ -25,6 +28,9 @@ public class ClienteControllerV2 {
 	ClienteService clienteService;
 	
 	//Cria uma rota para consulta do FindALL do meu JPA
+	@ApiResponses(value = {
+			@ApiResponse(code=200,message="Retorna a lista de Clientes")
+	})
 	@GetMapping
 	public ArrayList<Cliente> pesquisarTodos(){
 		return clienteService.findAll();
@@ -37,11 +43,18 @@ public class ClienteControllerV2 {
 		return clienteService.findByID(cpf);
 	}
 	
-	//Cria uma nova rota para consulta do findById pelo JPA
+	//Cria uma nova rota para consulta do cliente por sexo pelo JPA
 	@GetMapping("/sexo/{sexo}")
-	public ArrayList<Cliente> pesquisaPorId(@PathVariable Character sexo) {
+	public ArrayList<Cliente> pesquisaPorSexo(@PathVariable Character sexo) {
 		
 		return clienteService.findBySexo(sexo);
+	}
+	
+	//Cria uma nova rota para consulta do cliente por parte do telefone pelo JPA
+	@GetMapping("/telefone/{numero}")
+	public ArrayList<Cliente> pesquisaPorNumeroTelefone(@PathVariable String numero) {
+		
+		return clienteService.findByTelefone(numero);
 	}
 		
 	//Método com o verbo POST que será responsável por salvar o cliente 

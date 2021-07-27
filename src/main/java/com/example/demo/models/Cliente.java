@@ -1,11 +1,11 @@
 package com.example.demo.models;
 
+import java.util.ArrayList;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.OneToMany;
 
 @Entity(name="cliente")
 public class Cliente {
@@ -20,10 +20,13 @@ public class Cliente {
 	private Character sexo;
 	
 	@Column
-	private Integer telefone;
+	private String telefone;
 	
-	//@OneToMany(mappedBy="cart")
-	
+	/*
+	@OneToMany(mappedBy="conta")
+	ArrayList<Conta> contas = new ArrayList<Conta>();
+	*/
+
 	public Cliente() {
 		
 	}
@@ -60,10 +63,10 @@ public class Cliente {
 	public void setSexo(Character sexo) {
 		this.sexo = sexo;
 	}
-	public Integer getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
-	public void setTelefone(Integer telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 }

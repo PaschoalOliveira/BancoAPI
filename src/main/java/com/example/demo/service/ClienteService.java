@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.models.Cliente;
+import com.example.demo.models.Conta;
 import com.example.demo.repository.ClienteRepository;
 import com.example.demo.repository.ClienteRepository2;
 
@@ -38,7 +39,17 @@ public class ClienteService {
 	public ArrayList<Cliente> findBySexo(Character sexo){
 		ArrayList<Cliente> arrayRetorno = new ArrayList<Cliente>();
 		//Faz o CAST de uma List para um ArrayList
-		arrayRetorno = (ArrayList<Cliente>) clienteRepository2.findBySexo(sexo);
+		arrayRetorno = (ArrayList<Cliente>) clienteRepository2.pesquisaPorSexo(sexo);
+		
+		return arrayRetorno;
+	}
+	
+	//Método no service responsável por pesquisar por parte do telefone
+	//Chama o repository e realiza o casting
+	public ArrayList<Cliente> findByTelefone(String numero){
+		ArrayList<Cliente> arrayRetorno = new ArrayList<Cliente>();
+		//Faz o CAST de uma List para um ArrayList
+		arrayRetorno = (ArrayList<Cliente>) clienteRepository2.pesquisaPorTelefone(numero);
 		return arrayRetorno;
 	}
 	
