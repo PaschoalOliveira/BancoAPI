@@ -3,6 +3,8 @@ package com.example.demo.controller.v2;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,8 +34,22 @@ public class ClienteControllerV2 {
 			@ApiResponse(code=200,message="Retorna a lista de Clientes")
 	})
 	@GetMapping
-	public ArrayList<Cliente> pesquisarTodos(){
-		return clienteService.findAll();
+	public Page<Cliente> pesquisarTodos(
+		@RequestParam Integer page, 
+		@RequestParam Integer linesPerPage, 
+		@RequestParam String orderBy, 
+		@RequestParam String direction
+		){
+		return clienteService.findAll(page, linesPerPage, orderBy, direction);
+	}
+	
+	@GetMapping
+	@RequestMapping("/filtros")
+	public ArrayList<Cliente> pesquisarTodos(
+			@Nullable @RequestParam String nome,
+			@Nullable @RequestParam Character sexo){
+		
+		return clienteService.findAll(nome,sexo);
 	}
 	
 	//Cria uma nova rota para consulta do findById pelo JPA

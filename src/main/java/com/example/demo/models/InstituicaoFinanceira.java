@@ -1,10 +1,14 @@
 package com.example.demo.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity(name="instituicao_financeira")
 public class InstituicaoFinanceira {
@@ -16,6 +20,9 @@ public class InstituicaoFinanceira {
 	
 	@Column(name="nome")
 	private String name;
+	
+	@OneToMany(mappedBy="instituicao")
+	private List<Conta> contas;
 
 	public Integer getCodigo() {
 		return codigo;
@@ -31,5 +38,13 @@ public class InstituicaoFinanceira {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<Conta> getContas() {
+		return contas;
+	}
+
+	public void setContas(List<Conta> contas) {
+		this.contas = contas;
 	}
 }

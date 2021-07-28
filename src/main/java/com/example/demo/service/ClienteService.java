@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.models.Cliente;
 import com.example.demo.models.Conta;
 import com.example.demo.repository.ClienteRepository;
 import com.example.demo.repository.ClienteRepository2;
+import com.example.demo.specification.ClienteSpecification;
 
 @Service
 public class ClienteService {
@@ -21,10 +25,18 @@ public class ClienteService {
 	ClienteRepository2 clienteRepository2;
 	
 	//Método que irá consultar o repository que estende o JPA
-	public ArrayList<Cliente> findAll(){
+	public Page<Cliente> findAll(Integer page, Integer linesPerPage, String orderBy, String direction){
+		
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+		
+		return clienteRepository2.findAll(pageRequest);
+	}
+	
+	public ArrayList<Cliente> findAll(String nome, Character sexo){
 		ArrayList<Cliente> arrayRetorno = new ArrayList<Cliente>();
-		//Faz o CAST de uma List para um ArrayList
-		arrayRetorno = (ArrayList<Cliente>) clienteRepository2.findAll();
+		
+		arrayRetorno = (ArrayList<Cliente>) clienteRepository2
+				.findAll(ClienteSpecification.pesquisaPorNome(nome));
 		return arrayRetorno;
 	}
 	

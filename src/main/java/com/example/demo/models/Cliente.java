@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,10 +23,8 @@ public class Cliente {
 	@Column
 	private String telefone;
 	
-	/*
-	@OneToMany(mappedBy="conta")
-	ArrayList<Conta> contas = new ArrayList<Conta>();
-	*/
+	@OneToMany(mappedBy="cliente")
+	private List<Conta> contas;
 
 	public Cliente() {
 		
@@ -69,4 +68,14 @@ public class Cliente {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+
+	
+	public List<Conta> getContas() {
+		return contas;
+	}
+
+	public void setContas(ArrayList<Conta> contas) {
+		this.contas = contas;
+	}
+	
 }

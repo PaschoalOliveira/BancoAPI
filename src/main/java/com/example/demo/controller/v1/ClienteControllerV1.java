@@ -23,12 +23,6 @@ public class ClienteControllerV1 {
 	@Autowired
 	ClienteService clienteService;
 	
-	@GetMapping
-	public ArrayList<Cliente> pesquisarTodos() {
-		
-		return clienteService.findAll();
-	}
-	
 	@PostMapping
 	public void inserirCliente(@RequestBody Cliente cliente) {
 		//chama o meu service que vai inserir cliente
