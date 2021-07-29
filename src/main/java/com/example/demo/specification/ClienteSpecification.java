@@ -13,36 +13,48 @@ import org.springframework.data.jpa.domain.Specification;
 import com.example.demo.models.Cliente;
 import com.example.demo.models.Cliente_;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ClienteSpecification implements Specification<Cliente>{
 
-	public ClienteSpecification() {
-		
-	}
-	public static Specification<Cliente> pesquisaPorNome(String nome){
-		return ((root, criteriaQuery, criteriaBuilder) ->
-		{
-			return criteriaBuilder.equal(root.get(Cliente_.nome),nome);
-		});
-	}
+	private Integer cpf;
 	
-	public static Specification<Cliente> pesquisaPorSexo(Character sexo){
-		return ((root, criteriaQuery, criteriaBuilder) ->
-		{
-			return criteriaBuilder.equal(root.get(Cliente_.sexo),sexo);
-		});
-	}
-
+	private String nome;
+	
+	private Character sexo;
+	
+	private String telefone;
+	
 	@Override
-	public Predicate toPredicate(Root<Cliente> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+	public Predicate toPredicate(Root<Cliente> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 		final Collection<Predicate> predicates = new ArrayList<>();
 		
-		/*
-		if (sistema != null) {
-			Predicate p = cb.equal(root.get(TransacaoPagamento_.SISTEMA), this.sistema);
+		if (cpf != null) {
+			Predicate p = cb.equal(root.get(Cliente_.cpf),cpf);
 			predicates.add(p);
 		}
-		*/
-		return null; 
+		if (nome != null) {
+			Predicate p = cb.equal(root.get(Cliente_.nome),nome);
+			predicates.add(p);
+		}
+		if (sexo != null) {
+			Predicate p = cb.equal(root.get(Cliente_.sexo),sexo);
+			predicates.add(p);
+		}
+		if (telefone != null) {
+			Predicate p = cb.equal(root.get(Cliente_.telefone),telefone);
+			predicates.add(p);
+		}
+		Predicate[] array = predicates.toArray(new Predicate[predicates.size()]);
+
+		return cb.and(array);
 	}
 		 
 }

@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name="cliente")
 public class Cliente {
 
@@ -24,6 +26,7 @@ public class Cliente {
 	private String telefone;
 	
 	@OneToMany(mappedBy="cliente")
+	@JsonIgnore
 	private List<Conta> contas;
 
 	public Cliente() {

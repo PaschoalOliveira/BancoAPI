@@ -1,6 +1,5 @@
 package com.example.demo.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -23,6 +22,9 @@ public class InstituicaoFinanceira {
 	
 	@OneToMany(mappedBy="instituicao")
 	private List<Conta> contas;
+	
+	@OneToMany(mappedBy="instituicao")
+	private List<Agencia> agencias;
 
 	public Integer getCodigo() {
 		return codigo;
@@ -46,5 +48,13 @@ public class InstituicaoFinanceira {
 
 	public void setContas(List<Conta> contas) {
 		this.contas = contas;
+	}
+
+	public List<Agencia> getAgencias() {
+		return agencias;
+	}
+
+	public void setAgencias(List<Agencia> agencias) {
+		this.agencias = agencias;
 	}
 }

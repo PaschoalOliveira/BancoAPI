@@ -9,8 +9,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.models.Agencia;
 import com.example.demo.models.Cliente;
 import com.example.demo.models.Conta;
+import com.example.demo.models.InstituicaoFinanceira;
 import com.example.demo.repository.ClienteRepository;
 import com.example.demo.repository.ClienteRepository2;
 import com.example.demo.specification.ClienteSpecification;
@@ -25,18 +27,20 @@ public class ClienteService {
 	ClienteRepository2 clienteRepository2;
 	
 	//Método que irá consultar o repository que estende o JPA
-	public Page<Cliente> findAll(Integer page, Integer linesPerPage, String orderBy, String direction){
+	public Page<Cliente> findAll(Integer pagina, Integer linhasPorPagina, String orderBy, String direction){
 		
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+		PageRequest pageRequest = PageRequest.of(pagina, linhasPorPagina, Sort.Direction.valueOf(direction), orderBy);
 		
 		return clienteRepository2.findAll(pageRequest);
 	}
 	
-	public ArrayList<Cliente> findAll(String nome, Character sexo){
+	public ArrayList<Cliente> findAll(Integer cpf, String nome, Character sexo, String telefone){
 		ArrayList<Cliente> arrayRetorno = new ArrayList<Cliente>();
 		
+		ClienteSpecification clienteSpecification = new ClienteSpecification(cpf, nome, sexo, telefone);
+		
 		arrayRetorno = (ArrayList<Cliente>) clienteRepository2
-				.findAll(ClienteSpecification.pesquisaPorNome(nome));
+				.findAll(clienteSpecification);
 		return arrayRetorno;
 	}
 	

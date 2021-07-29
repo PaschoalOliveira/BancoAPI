@@ -8,9 +8,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
+import com.example.demo.utils.UtilsUrl;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity(name="conta")
 public class Conta {
 
@@ -28,46 +35,18 @@ public class Conta {
 	@JsonIgnoreProperties("contas")
 	private Cliente cliente;
 	
+	@Transient
+	private String uriCliente;
+	
+	public String getUriCliente() {
+		return new UtilsUrl()
+				.getUri("/v2/clientes", getCliente().getCpf()).toString();
+	}
+	
 	@ManyToOne
 	@JoinColumn(name="id_instituicao")
 	@JsonIgnoreProperties("contas")
 	private InstituicaoFinanceira instituicao;
-
-	public Conta() {
-		
-	}
-	
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public Double getSaldo() {
-		return saldo;
-	}
-
-	public void setSaldo(Double saldo) {
-		this.saldo = saldo;
-	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-	public InstituicaoFinanceira getInstituicao() {
-		return instituicao;
-	}
-
-	public void setInstituicao(InstituicaoFinanceira instituicao) {
-		this.instituicao = instituicao;
-	}
 	
 
 }

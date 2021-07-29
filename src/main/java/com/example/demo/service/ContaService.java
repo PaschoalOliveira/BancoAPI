@@ -21,7 +21,11 @@ public class ContaService {
 		for(Conta conta : listaRetorno) {
 			System.out.println(conta.getCliente().getNome());
 		}
-		return listaRetorno;
+		return listaRetorno;	
+	}
+	
+	public ArrayList<Conta> findBySaldo(Double saldo){
 		
+		return (ArrayList<Conta>)contaRepository.findBySaldoGreaterThan(saldo);
 	}
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,5 +21,10 @@ public class ContaControllerV1 {
 	@GetMapping
 	public ArrayList<Conta> findAll(){
 		return contaService.findAll();
+	}
+	
+	@GetMapping("/saldo/{saldo}")
+	public ArrayList<Conta> findBySaldo(@PathVariable Double saldo){
+		return contaService.findBySaldo(saldo);
 	}
 }

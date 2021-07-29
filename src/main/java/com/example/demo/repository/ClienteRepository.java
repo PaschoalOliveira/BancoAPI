@@ -10,6 +10,7 @@ import com.example.demo.models.Cliente;
 //Cria um bean do tipo repositório
 @Repository
 //Classe responsável por consumir o banco
+@Deprecated
 public class ClienteRepository {
 
     // Método responsável por resgatar as informações do banco

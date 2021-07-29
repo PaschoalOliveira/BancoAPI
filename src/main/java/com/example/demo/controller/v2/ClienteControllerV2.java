@@ -35,21 +35,23 @@ public class ClienteControllerV2 {
 	})
 	@GetMapping
 	public Page<Cliente> pesquisarTodos(
-		@RequestParam Integer page, 
-		@RequestParam Integer linesPerPage, 
-		@RequestParam String orderBy, 
-		@RequestParam String direction
+		@RequestParam(required = false, defaultValue = "0") Integer pagina, 
+		@RequestParam(required = false , defaultValue = "5") Integer linhas, 
+	    @RequestParam(required = false, defaultValue = "cpf") String ordenandoPor, 
+		@RequestParam(required = false, defaultValue = "ASC") String direcaoOrderBy
 		){
-		return clienteService.findAll(page, linesPerPage, orderBy, direction);
+		return clienteService.findAll(pagina, linhas, ordenandoPor, direcaoOrderBy);
 	}
 	
 	@GetMapping
 	@RequestMapping("/filtros")
 	public ArrayList<Cliente> pesquisarTodos(
+			@Nullable @RequestParam Integer cpf,
 			@Nullable @RequestParam String nome,
-			@Nullable @RequestParam Character sexo){
+			@Nullable @RequestParam Character sexo,
+			@Nullable @RequestParam String telefone){
 		
-		return clienteService.findAll(nome,sexo);
+		return clienteService.findAll(cpf, nome, sexo, telefone);
 	}
 	
 	//Cria uma nova rota para consulta do findById pelo JPA
