@@ -55,7 +55,7 @@ public class ClienteControllerV2 {
 	}
 	
 	//Cria uma nova rota para consulta do findById pelo JPA
-	@GetMapping("{cpf}")
+	@GetMapping("/{cpf}")
 	public Cliente pesquisaPorId(@PathVariable Integer cpf) {
 		
 		return clienteService.findByID(cpf);

@@ -1,9 +1,13 @@
 package com.example.demo.models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -31,4 +35,10 @@ public class Empregado {
 	@JsonIgnoreProperties("empregados")
 	private Agencia agencia;
 	
+	@ManyToMany
+	@JoinTable(
+			name="empregado_dependente",
+			joinColumns=@JoinColumn(name = "cpf_empregado"),
+			inverseJoinColumns = @JoinColumn(name = "id_dependente"))
+	private List<Dependente> dependentes;
 }
