@@ -1,17 +1,19 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.AgenciaDTO;
 import com.example.demo.models.Agencia;
 import com.example.demo.repository.AgenciaRepository;
 import com.example.demo.specification.AgenciaSpecification;
-import com.example.demo.specification.ClienteSpecification;
 
 @Service
 public class AgenciaService {
@@ -28,7 +30,7 @@ public class AgenciaService {
 		return agenciaRepository.findAll(pageRequest);
 	}
 	
-	public Page<Agencia> buscarTodosComFiltros(Integer numeroPagina, Integer itensPorPagina, String campoOrdenacao, 
+	public Page<AgenciaDTO> buscarTodosComFiltros(Integer numeroPagina, Integer itensPorPagina, String campoOrdenacao, 
 			String direcaoOrdenacao,String nome, Integer id){
 		
 		//Crio um objeto PageREquest responsável por realizar a paginação e ordenação
@@ -37,7 +39,26 @@ public class AgenciaService {
 		AgenciaSpecification agenciaSpecification = new AgenciaSpecification(id,nome);
 		
 		//O findAll com o parâmetro pageREquest retorna Page<Agencia>
-		return agenciaRepository.findAll(agenciaSpecification, pageRequest);
+		//Recebo o Page<Agencia vindo da base repository com os dados especificados
+		Page<Agencia> pageAgencia = agenciaRepository.findAll(agenciaSpecification, pageRequest);
+		
+		//Transformo o Page<Agencia> e Um List<Agencia>
+		List<Agencia> agencias = pageAgencia.toList();
+		
+		ArrayList<AgenciaDTO> agenciasDTO = new ArrayList<AgenciaDTO>();
+		
+		//Percorre a lista de AgenciaDTO, preenche as informações do DTO e adiciona em uma lista que será retornada
+		for(Agencia agencia : agencias) {
+			AgenciaDTO agenciaDto = new AgenciaDTO(agencia.getId(), agencia.getNome(),agencia.getInstituicao(), agencia.getEmpregados());
+			agenciasDTO.add(agenciaDto);
+		}
+		
+		final int start = (int)pageRequest.getOffset();
+		final int end = Math.min((start + pageRequest.getPageSize()), agenciasDTO.size());
+		
+		Page<AgenciaDTO> pageAgenciaDTO = new PageImpl<>(agenciasDTO.subList(start, end), pageRequest, agenciasDTO.size());
+		
+		return pageAgenciaDTO;
 	}
 	
 	public ArrayList<Agencia> buscarPorFiltros(String nome, Integer id){

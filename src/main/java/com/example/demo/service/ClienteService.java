@@ -69,8 +69,8 @@ public class ClienteService {
 		return arrayRetorno;
 	}
 	
-	public void save(Cliente cliente) {
-		clienteRepository2.save(cliente);
+	public Cliente save(Cliente cliente) {
+		return clienteRepository2.save(cliente);
 	}
 	
 	//Método responsável por chamar o delete do JPA
