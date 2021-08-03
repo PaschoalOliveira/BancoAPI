@@ -1,20 +1,25 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.models.Agencia;
+import com.example.demo.dto.ClienteDTO;
 import com.example.demo.models.Cliente;
 import com.example.demo.models.Conta;
-import com.example.demo.models.InstituicaoFinanceira;
 import com.example.demo.repository.ClienteRepository;
 import com.example.demo.repository.ClienteRepository2;
+import com.example.demo.repository.InstituicaoFinanceiraRepository;
 import com.example.demo.specification.ClienteSpecification;
 
 @Service
@@ -25,6 +30,9 @@ public class ClienteService {
 	
 	@Autowired
 	ClienteRepository2 clienteRepository2;
+	
+	@Autowired
+	CryptoService cryptoService;
 	
 	//Método que irá consultar o repository que estende o JPA
 	public Page<Cliente> findAll(Integer pagina, Integer linhasPorPagina, String orderBy, String direction){
@@ -45,11 +53,29 @@ public class ClienteService {
 	}
 	
 	//Método que realiza a consulta por ID no JPARepository
-	public Cliente findByID(Integer cpf) {
+	public ClienteDTO findByID(Integer cpf) {
 		Optional<Cliente> optionalClienteRetorno;
 		optionalClienteRetorno = clienteRepository2.findById(cpf);
 		
-		return optionalClienteRetorno.get();
+		Cliente cliente = optionalClienteRetorno.get();
+
+		Double dCotacao = cryptoService.getBitCoinPrice();
+		List<Conta> contas = cliente.getContas();
+		
+		/*
+		for(Conta conta : cliente.getContas()) {
+			conta.setSaldoBitCoin(conta.getSaldoBitCoin() * dCotacao);
+		}
+		*/
+		//Executa o código acima usando arrow function
+		contas.forEach(conta -> conta.setSaldoBitCoin(conta.getSaldoBitCoin() * dCotacao));
+		
+		//contas.stream().filter(conta->conta.getInstituicao().getName().equals("Itau"));
+		
+		ClienteDTO clienteDto = new ClienteDTO();
+		clienteDto.createClienteDTO(cliente);
+		
+		return clienteDto;
 	}
 	
 	public ArrayList<Cliente> findBySexo(Character sexo){

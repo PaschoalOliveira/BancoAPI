@@ -29,6 +29,9 @@ public class Conta {
 	@Column
 	private Double saldo;
 	
+	@Column
+	private Double saldoBitCoin;
+	
 	//(fetch = FetchType.LAZY)
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="cpf")

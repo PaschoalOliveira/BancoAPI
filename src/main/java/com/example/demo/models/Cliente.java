@@ -5,10 +5,9 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name="cliente")
 public class Cliente {
@@ -25,8 +24,7 @@ public class Cliente {
 	@Column
 	private String telefone;
 	
-	@OneToMany(mappedBy="cliente")
-	@JsonIgnore
+	@OneToMany(fetch = FetchType.EAGER,mappedBy="cliente")
 	private List<Conta> contas;
 
 	public Cliente() {

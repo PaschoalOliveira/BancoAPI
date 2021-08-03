@@ -3,6 +3,8 @@ package com.example.demo.controller.v1;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +30,16 @@ public class ClienteControllerV1 {
 		//chama o meu service que vai inserir cliente
 		System.out.println("Inserindo " + cliente.toString());
 	}
+	
+	/*
+	@GetMapping("/{cpf}")
+	public ResponseEntity<Cliente> resgatarTodosClientes(@PathVariable Integer cpf) {
+		
+		return new ResponseEntity<Cliente>(
+				clienteService.findByID(cpf),HttpStatus.OK);
+	}
+	*/
+
 	
 	//Criando nova rota
 	@GetMapping("/pesquisarNome")
@@ -57,6 +69,5 @@ public class ClienteControllerV1 {
 		ArrayList<Cliente> arrayCliente = clienteService.pesquisarClientePorSexo(sexo);
 		return arrayCliente;
 	}
-	
 	
 }

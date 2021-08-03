@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.ClienteDTO;
 import com.example.demo.models.Cliente;
 import com.example.demo.service.ClienteService;
 
@@ -56,7 +57,7 @@ public class ClienteControllerV2 {
 	
 	//Cria uma nova rota para consulta do findById pelo JPA
 	@GetMapping("/{cpf}")
-	public Cliente pesquisaPorId(@PathVariable Integer cpf) {
+	public ClienteDTO pesquisaPorId(@PathVariable Integer cpf) {
 		
 		return clienteService.findByID(cpf);
 	}
