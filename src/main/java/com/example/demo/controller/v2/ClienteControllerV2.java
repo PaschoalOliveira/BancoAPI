@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,9 +59,9 @@ public class ClienteControllerV2 {
 	
 	//Cria uma nova rota para consulta do findById pelo JPA
 	@GetMapping("/{cpf}")
-	public ClienteDTO pesquisaPorId(@PathVariable Integer cpf) {
+	public ResponseEntity<ClienteDTO> pesquisaPorId(@PathVariable Integer cpf) {
 		
-		return clienteService.findByID(cpf);
+		return new ResponseEntity<ClienteDTO>(clienteService.findByID(cpf), HttpStatus.OK);
 	}
 	
 	//Cria uma nova rota para consulta do cliente por sexo pelo JPA

@@ -44,7 +44,6 @@ class BancoApiApplicationTests {
 	}
 	
 	
-	
 	@Test
 	//DADO QUE eu tenha um cpf existente no banco
 	//QUANDO eu pesquisar um cliente

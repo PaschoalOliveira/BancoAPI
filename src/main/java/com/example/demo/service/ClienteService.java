@@ -72,8 +72,9 @@ public class ClienteService {
 		
 		//contas.stream().filter(conta->conta.getInstituicao().getName().equals("Itau"));
 		
-		ClienteDTO clienteDto = new ClienteDTO();
-		clienteDto.createClienteDTO(cliente);
+		 //= new ClienteDTO();
+		
+		 ClienteDTO clienteDto = ClienteDTO.createClienteDTOWithModelMapper(cliente);
 		
 		return clienteDto;
 	}

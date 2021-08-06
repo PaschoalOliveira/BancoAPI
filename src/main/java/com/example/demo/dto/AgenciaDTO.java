@@ -1,8 +1,10 @@
 package com.example.demo.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
+
+import com.example.demo.models.Agencia;
 import com.example.demo.models.Empregado;
 import com.example.demo.models.InstituicaoFinanceira;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -42,6 +44,12 @@ public class AgenciaDTO {
 		this.nome = nome;
 		this.instituicao = instituicao;
 		this.empregados = list;
+	}
+	
+	
+	public AgenciaDTO create(Agencia agencia) {
+		ModelMapper modelMapper = new ModelMapper();
+		return modelMapper.map(agencia, AgenciaDTO.class);
 	}
 
 }

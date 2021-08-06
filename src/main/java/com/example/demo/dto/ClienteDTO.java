@@ -2,10 +2,15 @@ package com.example.demo.dto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.DoubleStream;
+
+import org.modelmapper.AbstractConverter;
+import org.modelmapper.Converter;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 
 import com.example.demo.models.Cliente;
 import com.example.demo.models.Conta;
-import com.example.demo.models.InstituicaoFinanceira;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -48,5 +53,39 @@ public class ClienteDTO {
 		}
 		this.setSaldo(saldo);
 		this.setSaldoBitcoin(saldoBitCoin);
+	}
+	
+	public static ClienteDTO createClienteDTOWithModelMapper(Cliente cliente) {
+		ModelMapper modelMapper = new ModelMapper();
+		
+		Converter<Cliente, ClienteDTO> converter = new AbstractConverter<Cliente, ClienteDTO>() {
+		    @Override
+		    protected ClienteDTO convert(Cliente source) {
+		        ClienteDTO destination = new ClienteDTO();
+
+		        //Usa a estrutura lambda para resgatar o somatório e Saldos nas contas
+		        Double somatorioSaldo = 0.0;
+		        for(Conta conta : source.getContas()) {
+		        	somatorioSaldo = somatorioSaldo + conta.getSaldo();
+		        }
+		        //Retorna todos os saldos da conta em uma estrutura de stream(imaginem esse stream como um array de Double)
+		        DoubleStream stream = source.getContas().stream().mapToDouble(c ->c.getSaldo());
+		        //Faço o sum de todos os saldos contidos no stream
+		        somatorioSaldo = stream.sum();
+		        Double somatorioSaldoBitcoin = source.getContas().stream().mapToDouble(c ->c.getSaldoBitCoin()).sum();
+
+		        destination.setSaldo(somatorioSaldo);
+	            destination.setSaldoBitcoin(somatorioSaldoBitcoin);
+
+		        return destination;
+		    }
+		};
+		
+		TypeMap<Cliente, ClienteDTO> typeMap = modelMapper.createTypeMap(Cliente.class, ClienteDTO.class);
+				
+		typeMap.setPostConverter(converter);
+		
+		modelMapper.typeMap(null, null);
+		return modelMapper.map(cliente, ClienteDTO.class);
 	}
 }
