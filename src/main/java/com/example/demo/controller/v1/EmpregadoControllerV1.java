@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.EmpregadoDTO;
 import com.example.demo.models.Empregado;
 import com.example.demo.service.EmpregadoService;
 
@@ -22,8 +23,8 @@ public class EmpregadoControllerV1 {
 	EmpregadoService empregadoService;
 	
 	@GetMapping
-	public ResponseEntity<ArrayList<Empregado>> buscarTodos(){
+	public ResponseEntity<ArrayList<EmpregadoDTO>> buscarTodos(){
 		
-		return new ResponseEntity<ArrayList<Empregado>>(empregadoService.findAll(),HttpStatus.OK);
+		return new ResponseEntity<ArrayList<EmpregadoDTO>>(empregadoService.findAll(),HttpStatus.OK);
 	}
 }

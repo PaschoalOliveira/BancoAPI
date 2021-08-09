@@ -76,16 +76,27 @@ public class ClienteDTO {
 
 		        destination.setSaldo(somatorioSaldo);
 	            destination.setSaldoBitcoin(somatorioSaldoBitcoin);
+	            
+	            destination.setCpf(source.getCpf());
+	            destination.setNome(source.getNome());
+	            destination.setSexo(source.getSexo());
+	            destination.setTelefone(source.getTelefone());
 
 		        return destination;
 		    }
 		};
+		/*
+		ClienteDTO clienteDto = new ClienteDTO();
+		
 		
 		TypeMap<Cliente, ClienteDTO> typeMap = modelMapper.createTypeMap(Cliente.class, ClienteDTO.class);
-				
-		typeMap.setPostConverter(converter);
+		typeMap.setConverter(converter);
+		clienteDto = modelMapper.map(cliente, ClienteDTO.class);
+		//typeMap.map(cliente,clienteDto);
+		 */
 		
-		modelMapper.typeMap(null, null);
+		
+		modelMapper.addConverter(converter);
 		return modelMapper.map(cliente, ClienteDTO.class);
 	}
 }

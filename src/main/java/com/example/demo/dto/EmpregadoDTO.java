@@ -20,8 +20,19 @@ public class EmpregadoDTO {
 	
 	private String nome;
 	
+	private String agenciaNome;
+	
+	private String nomeInstituicao;
+	
 	private Agencia agencia;
 	
+	public void createWithoutModelMapper(Empregado empr) {
+		this.setCpf(empr.getCpf());
+		this.setNome(empr.getNome());
+		this.setAgenciaNome(empr.getAgencia() != null ? empr.getAgencia().getNome() : "");
+		this.setNomeInstituicao(empr.getAgencia() != null && empr.getAgencia().getInstituicao() != null 
+								? empr.getAgencia().getInstituicao().getName() : "");
+	}
 	
 	public EmpregadoDTO create(Empregado empr) {
 		ModelMapper modelMapper = new ModelMapper();
