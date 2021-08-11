@@ -26,12 +26,15 @@ public class EmpregadoDTO {
 	
 	private Agencia agencia;
 	
-	public void createWithoutModelMapper(Empregado empr) {
-		this.setCpf(empr.getCpf());
-		this.setNome(empr.getNome());
-		this.setAgenciaNome(empr.getAgencia() != null ? empr.getAgencia().getNome() : "");
-		this.setNomeInstituicao(empr.getAgencia() != null && empr.getAgencia().getInstituicao() != null 
+	public static EmpregadoDTO createWithoutModelMapper(Empregado empr) {
+		EmpregadoDTO emprDto = new EmpregadoDTO();
+		emprDto.setCpf(empr.getCpf());
+		emprDto.setNome(empr.getNome());
+		emprDto.setAgenciaNome(empr.getAgencia() != null ? empr.getAgencia().getNome() : "");
+		emprDto.setNomeInstituicao(empr.getAgencia() != null && empr.getAgencia().getInstituicao() != null 
 								? empr.getAgencia().getInstituicao().getName() : "");
+		
+		return emprDto;
 	}
 	
 	public EmpregadoDTO create(Empregado empr) {

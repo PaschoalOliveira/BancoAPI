@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.example.demo.dto.ClienteDTO;
 
-@SpringBootTest(classes=BancoApiApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@SpringBootTest(classes=BancoApiApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ClienteControllerTests {
 
 	@Autowired
@@ -29,7 +29,7 @@ class ClienteControllerTests {
 	//DADO que eu tenho um  cliente com o id 98723
 	//QUANDO buscar por esse id
 	//ENTÃO deve me retornar um cliente com o nome não nulo
-	@Test
+	//@Test
 	public void testaRetornoCliente() {
 		ClienteDTO clienteDTO =  this.getObjectClienteDTO("/v2/clientes/98723").getBody();
 		assertNotNull(clienteDTO.getNome());

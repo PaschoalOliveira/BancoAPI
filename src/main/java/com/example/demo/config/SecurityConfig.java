@@ -21,6 +21,7 @@ import com.example.demo.service.UsuarioServiceApi;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
+	//Classe responsável por buscar as informações de usuário no banco. Classe implementada por nós
 	UsuarioServiceApi usuarioServiceApi;
 	
 	@Autowired
@@ -37,10 +38,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public OncePerRequestFilter jwtFilter() {
 		return new JwtAuthFilter(jwtService, usuarioServiceApi);
 	}
-	
-	@Autowired
-	//Classe responsável por buscar as informações de usuário no banco. Classe implementada por nós
-	private UsuarioServiceApi usuarioService;
 	
 	//Autenticação Antiga em memória
 	/*
@@ -59,22 +56,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		//Define a classe de serviço responsável por buscar as informações no banco
-		auth.userDetailsService(usuarioService)
+		auth.userDetailsService(usuarioServiceApi)
 		.passwordEncoder(passwordEncoder());
 	}
 	
 	//Autorização
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		// Forma  ser feita sem jwt
-		/*
+		// Forma  ser feita sem jwt e com basic auth
+		
+		
 		http.cors().and()
 		.csrf().disable()
 		.authorizeRequests()
 		.antMatchers("/v1/**").hasRole("USUARIO")
 		.and()
 		.httpBasic();
-		*/
+		
+		/*
 		//Forma de se autenticar usando o JsonWebToken
 		http.cors().and()
 		.csrf().disable()
@@ -85,7 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()
 		.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
-		
+		*/
 	}
 	
 }

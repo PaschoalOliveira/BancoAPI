@@ -1,7 +1,5 @@
 package com.example.demo.service;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -49,11 +47,12 @@ public class UsuarioServiceApi implements UserDetailsService{
 		//Retorna o Optional de Repository e lança uma exceção caso não exista
 		UsuarioApi usuario = usuarioRepository.findByLogin(username).orElseThrow();
 		
+		//Carrega os papeis do usuario. CAso seja administrador. Ele receberá os papéis de Gestor e Usuario. CAso não só usuário
 		String[] roles = usuario.isAdmin() ? 
 				new String[] {"GESTOR","USUARIO"} :
 					new String[] {"USUARIO"};
 		
-		//Mesma idiea de return new UserDetails(username, senha, roles)
+		//Mesma idiea de chamda de um construtor new UserDetails(username, senha, roles)
 		return User.builder()
 				.username(usuario.getLogin())
 				.password(usuario.getSenha())
