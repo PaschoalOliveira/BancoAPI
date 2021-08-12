@@ -27,7 +27,7 @@ public class EmpregadoControllerV1 {
 			@RequestParam(required = false) String nome,
 			@RequestParam(required = false) String nomeAgencia,
 			@RequestParam(required = false, defaultValue = "5") Integer qtdItens,
-			@RequestParam(required = false, defaultValue = "1") Integer numeroPagina,
+			@RequestParam(required = false, defaultValue = "0") Integer numeroPagina,
 			@RequestParam(required = false, defaultValue = "ASC") String direcaoOrdenacao,
 			@RequestParam(required = false, defaultValue = "nome") String campoOrdenacao){
 		

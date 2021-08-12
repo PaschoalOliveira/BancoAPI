@@ -39,11 +39,11 @@ public class EmpregadoSpecification implements Specification<Empregado>{
 			predicates.add(p);
 		}
 		if(this.nome != null) {
-			Predicate p = criteriaBuilder.equal(root.get("nome"), nome);
+			Predicate p = criteriaBuilder.like(root.get("nome"), nome);
 			predicates.add(p);
 		}
 		if(this.nomeAgencia != null) {
-			Predicate p = criteriaBuilder.equal(root.get("agencia").get("nome"), nomeAgencia);
+			Predicate p = criteriaBuilder.like(root.get("agencia").get("nome"), nomeAgencia);
 			predicates.add(p);
 		}
 		
