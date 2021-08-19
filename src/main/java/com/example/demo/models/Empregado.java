@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -7,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -22,13 +24,23 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name="empregado")
-public class Empregado {
+public class Empregado implements Serializable{
+
+
+	private static final long serialVersionUID = -1900845071854485601L;
 
 	@Id
 	private Integer cpf;
 	
 	@Column
 	private String nome;
+	
+	@Column
+	private Double salario;
+	
+	@Column
+	@Lob
+	private Byte[] foto;
 	
 	@ManyToOne
 	@JoinColumn(name="id_agencia")

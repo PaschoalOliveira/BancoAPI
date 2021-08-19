@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -19,7 +20,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AgenciaDTO {
+public class AgenciaDTO implements Serializable{
+
+	private static final long serialVersionUID = 2795404929733238241L;
 
 	private Integer id;
 	

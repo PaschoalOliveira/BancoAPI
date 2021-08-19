@@ -1,9 +1,11 @@
 package com.example.demo.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +25,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name="agencia")
-public class Agencia {
+public class Agencia implements Serializable{
+
+	private static final long serialVersionUID = 3299265296110493550L;
 
 	@Id
 	@Column(name="id_agencia")
@@ -38,7 +42,7 @@ public class Agencia {
 	@JsonIgnoreProperties("agencias")
 	private InstituicaoFinanceira instituicao;
 	
-	@OneToMany(mappedBy="agencia")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="agencia")
 	private List<Empregado> empregados;
 	
 }

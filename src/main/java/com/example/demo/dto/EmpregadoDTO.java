@@ -1,5 +1,7 @@
 package com.example.demo.dto;
 
+import java.io.Serializable;
+
 import org.modelmapper.ModelMapper;
 
 import com.example.demo.models.Agencia;
@@ -14,7 +16,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmpregadoDTO {
+public class EmpregadoDTO implements Serializable{
+
+	private static final long serialVersionUID = 5211838357113483763L;
 
 	private Integer cpf;
 	
@@ -23,6 +27,8 @@ public class EmpregadoDTO {
 	private String agenciaNome;
 	
 	private String nomeInstituicao;
+	
+	private Double salario;
 	
 	private Agencia agencia;
 	
@@ -34,6 +40,7 @@ public class EmpregadoDTO {
 		emprDto.setNomeInstituicao(empr.getAgencia() != null && empr.getAgencia().getInstituicao() != null 
 								? empr.getAgencia().getInstituicao().getName() : "");
 		
+		emprDto.setSalario(empr.getSalario());
 		return emprDto;
 	}
 	

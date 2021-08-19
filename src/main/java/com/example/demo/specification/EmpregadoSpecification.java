@@ -10,6 +10,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.example.demo.models.Empregado;
+import com.example.demo.models.Empregado_;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,12 +35,13 @@ public class EmpregadoSpecification implements Specification<Empregado>{
 		
 		ArrayList<Predicate> predicates = new ArrayList<Predicate>();
 		
-		if(this.cpf != null) {
+		if(this.cpf != null) {			
 			Predicate p = criteriaBuilder.equal(root.get("cpf"), cpf);
+			
 			predicates.add(p);
 		}
 		if(this.nome != null) {
-			Predicate p = criteriaBuilder.like(root.get("nome"), nome);
+			Predicate p = criteriaBuilder.like(root.get("nome"), "%" + nome + "%");
 			predicates.add(p);
 		}
 		if(this.nomeAgencia != null) {

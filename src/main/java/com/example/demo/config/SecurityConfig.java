@@ -66,25 +66,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// Forma  ser feita sem jwt e com basic auth
 		
 		
+		
 		http.cors().and()
 		.csrf().disable()
 		.authorizeRequests()
-		.antMatchers("/v1/**").hasRole("USUARIO")
+		.antMatchers("/v1/usuarios/**").hasRole("USUARIO")
 		.and()
 		.httpBasic();
 		
-		/*
+		
 		//Forma de se autenticar usando o JsonWebToken
 		http.cors().and()
 		.csrf().disable()
 		.authorizeRequests()
-		.antMatchers("/v1/**").hasRole("USUARIO")
+		.antMatchers("/v1/empregados**").hasRole("USUARIO")
 		.and()
 		.sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()
 		.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
-		*/
+		
 	}
 	
 }

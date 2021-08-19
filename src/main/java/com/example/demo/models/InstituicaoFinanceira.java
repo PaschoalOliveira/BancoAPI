@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -9,8 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name="instituicao_financeira")
-public class InstituicaoFinanceira {
+public class InstituicaoFinanceira implements Serializable{
+
+	private static final long serialVersionUID = -7888273091503832305L;
 
 	@Id
 	@Column(name="id")
@@ -21,6 +26,7 @@ public class InstituicaoFinanceira {
 	private String name;
 	
 	@OneToMany(mappedBy="instituicao")
+	@JsonIgnore
 	private List<Conta> contas;
 	
 	@OneToMany(mappedBy="instituicao")

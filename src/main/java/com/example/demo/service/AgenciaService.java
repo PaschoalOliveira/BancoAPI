@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -29,7 +30,7 @@ public class AgenciaService {
 		//O findAll com o parâmetro pageREquest retorna Page<Agencia>
 		return agenciaRepository.findAll(pageRequest);
 	}
-	
+	@Cacheable(value="agencias")
 	public Page<AgenciaDTO> buscarTodosComFiltros(Integer numeroPagina, Integer itensPorPagina, String campoOrdenacao, 
 			String direcaoOrdenacao,String nome, Integer id){
 		

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,17 +35,22 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 			FilterChain filterChain)
 			throws ServletException, IOException {
 		
-		//Pega do cabeção o valor Authorization que contém o token
+		//Pega do cabeçalho o valor Authorization que contém o token
 		String authorization = request.getHeader("Authorization");
-	
+		String tokenCookie = "";
+		for ( int i=0; request.getCookies() != null && i<request.getCookies().length; i++) {
+	      Cookie cookie = request.getCookies()[i];
+	      if (cookie.getName().equals("TOKEN"))
+	        tokenCookie = cookie.getValue();
+	    }
 		//Nosso token sempre será passado com o Bearer na frente
-		if(authorization != null && authorization.startsWith("Bearer")) {
-			//Pego a segunda parte do token separado por vírgula
-			String token = authorization.split(" ")[1];
-			Boolean tokenValido = jwtService.tokenValido(token);
+		//if(authorization != null && authorization.startsWith("Bearer")) {
+		if(authorization != null && authorization.startsWith("Bearer") || (!tokenCookie.equals(""))) {
+			String tokenBearer = authorization.split(" ")[1];
+			Boolean tokenValido = jwtService.tokenValido(tokenCookie) || jwtService.tokenValido(tokenBearer);
 			
 			if(tokenValido) {
-				String loginUsuario = jwtService.obterLoginUsuario(token);
+				String loginUsuario = jwtService.obterLoginUsuario(tokenBearer);
 				UserDetails userDetails =  usuarioServiceApi.loadUserByUsername(loginUsuario);
 				//Crio a estrutura de Usuário para ser salvo no contexto do Spring Framework
 				UsernamePasswordAuthenticationToken userAuth =
